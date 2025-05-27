@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GoldenBite - Food Ordering</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">GoldenBite</div>
+    <ul class="nav-links">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#testimonials">Testimonials</a></li>
+      <li><a href="#newsletter">Newsletter</a></li>
+    </ul>
+  </header>
+
+  <section class="hero">
+    <h1>Welcome to GoldenBite</h1>
+    <p>Luxury food at your fingertips. Order now!</p>
+    <button onclick="scrollToSection('menu')">View Menu</button>
+  </section>
+
+  <section id="menu" class="menu-section">
+    <h2>Our Menu</h2>
+    <div class="menu-grid">
+      <div class="menu-item scroll-reveal">
+        <h3>🍕 Margherita Pizza</h3>
+        <p>Classic delight with golden crust and basil.</p>
+        <button onclick="addToCart('Margherita Pizza')">Add to Cart</button>
+      </div>
+      <div class="menu-item scroll-reveal">
+        <h3>🍔 Gourmet Burger</h3>
+        <p>Juicy beef patty with gold-leaf cheese.</p>
+        <button onclick="addToCart('Gourmet Burger')">Add to Cart</button>
+      </div>
+      <div class="menu-item scroll-reveal">
+        <h3>🍝 Truffle Pasta</h3>
+        <p>Creamy pasta with white truffle shavings.</p>
+        <button onclick="addToCart('Truffle Pasta')">Add to Cart</button>
+      </div>
+      <div class="menu-item scroll-reveal">
+        <h3>🍰 Chocolate Lava Cake</h3>
+        <p>Molten chocolate with gold dust sprinkles.</p>
+        <button onclick="addToCart('Lava Cake')">Add to Cart</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="testimonials" class="testimonials scroll-reveal">
+    <h2>Customer Love</h2>
+    <p>“Absolutely delicious! Worth every gold coin.” – Mr. Roy</p>
+    <p>“Fast delivery and heavenly taste.” – Ms. Sharma</p>
+  </section>
+
+  <section id="newsletter" class="newsletter scroll-reveal">
+    <h2>Stay Updated</h2>
+    <p>Get exclusive offers and premium recipes!</p>
+    <form>
+      <input type="email" placeholder="Your email" required />
+      <button type="submit">Subscribe</button>
+    </form>
+  </section>
+
+  <footer class="footer">
+    <p>©️ 2025 GoldenBite. Premium Dining Experience.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
