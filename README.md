@@ -31,7 +31,7 @@ GoldenBite is a premium, scrollable food ordering website built using **HTML**, 
 1. **Clone or Download** this repository:
 
    ```bash
-   git clone https://github.com/your-username/goldenbite-food-ordering.git
+   git clone https://github.com/subhra475/Food-Ordering-system.git
    ```
 
 2. **Open** `index.html` in your browser.
