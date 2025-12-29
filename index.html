@@ -6,67 +6,253 @@
   <title>GoldenBite - Food Ordering</title>
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-  <header class="navbar">
-    <div class="logo">GoldenBite</div>
-    <ul class="nav-links">
-      <li><a href="#menu">Menu</a></li>
-      <li><a href="#testimonials">Testimonials</a></li>
-      <li><a href="#newsletter">Newsletter</a></li>
-    </ul>
-  </header>
 
-  <section class="hero">
-    <h1>Welcome to GoldenBite</h1>
-    <p>Luxury food at your fingertips. Order now!</p>
-    <button onclick="scrollToSection('menu')">View Menu</button>
-  </section>
+<header class="navbar">
+  <div class="logo">GoldenBite</div>
+  <ul class="nav-links">
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#orders">Orders</a></li>
+    <li><a href="#auth">Login</a></li>
+  </ul>
+</header>
 
-  <section id="menu" class="menu-section">
-    <h2>Our Menu</h2>
-    <div class="menu-grid">
-      <div class="menu-item scroll-reveal">
-        <h3>🍕 Margherita Pizza</h3>
-        <p>Classic delight with golden crust and basil.</p>
-        <button onclick="addToCart('Margherita Pizza')">Add to Cart</button>
-      </div>
-      <div class="menu-item scroll-reveal">
-        <h3>🍔 Gourmet Burger</h3>
-        <p>Juicy beef patty with gold-leaf cheese.</p>
-        <button onclick="addToCart('Gourmet Burger')">Add to Cart</button>
-      </div>
-      <div class="menu-item scroll-reveal">
-        <h3>🍝 Truffle Pasta</h3>
-        <p>Creamy pasta with white truffle shavings.</p>
-        <button onclick="addToCart('Truffle Pasta')">Add to Cart</button>
-      </div>
-      <div class="menu-item scroll-reveal">
-        <h3>🍰 Chocolate Lava Cake</h3>
-        <p>Molten chocolate with gold dust sprinkles.</p>
-        <button onclick="addToCart('Lava Cake')">Add to Cart</button>
-      </div>
+<section class="hero">
+  <h1>Welcome to GoldenBite</h1>
+  <p>Luxury food at your fingertips</p>
+  <button onclick="scrollToSection('menu')">View Menu</button>
+</section>
+
+<!-- MENU -->
+<section id="menu" class="menu-section">
+  <h2>Our Menu</h2>
+  <div class="menu-grid">
+
+    <div class="menu-item">
+      <h3>🍕 Margherita Pizza</h3>
+      <p>₹299</p>
+      <button onclick="addItem('Margherita Pizza - ₹299')">Add</button>
     </div>
-  </section>
 
-  <section id="testimonials" class="testimonials scroll-reveal">
-    <h2>Customer Love</h2>
-    <p>“Absolutely delicious! Worth every gold coin.” – Mr. Roy</p>
-    <p>“Fast delivery and heavenly taste.” – Ms. Sharma</p>
-  </section>
+    <div class="menu-item">
+      <h3>🍔 Gourmet Burger</h3>
+      <p>₹249</p>
+      <button onclick="addItem('Gourmet Burger - ₹249')">Add</button>
+    </div>
 
-  <section id="newsletter" class="newsletter scroll-reveal">
-    <h2>Stay Updated</h2>
-    <p>Get exclusive offers and premium recipes!</p>
-    <form>
-      <input type="email" placeholder="Your email" required />
-      <button type="submit">Subscribe</button>
-    </form>
-  </section>
+    <div class="menu-item">
+      <h3>🍝 Truffle Pasta</h3>
+      <p>₹349</p>
+      <button onclick="addItem('Truffle Pasta - ₹349')">Add</button>
+    </div>
 
-  <footer class="footer">
-    <p>©️ 2025 GoldenBite. Premium Dining Experience.</p>
-  </footer>
+    <div class="menu-item">
+      <h3>🍰 Lava Cake</h3>
+      <p>₹199</p>
+      <button onclick="addItem('Lava Cake - ₹199')">Add</button>
+    </div>
 
-  <script src="script.js"></script>
+  </div>
+</section>
+
+<!-- CART + PAYMENT -->
+<section id="payment" class="menu-section" style="display:none;">
+  <h2>Your Items</h2>
+  <div id="cartList"></div>
+
+  <label>Payment Method</label><br>
+  <select id="paymentMethod">
+    <option value="Cash on Delivery">Cash on Delivery</option>
+    <option value="Demo UPI">Demo UPI</option>
+  </select>
+
+  <br><br>
+  <button onclick="placeOrder()">Place Order</button>
+  <p id="orderMsg"></p>
+</section>
+
+<!-- ORDERS -->
+<section id="orders" class="menu-section">
+  <h2>Order History</h2>
+  <div id="orderHistory" class="menu-grid">
+    <p>Please login to see orders</p>
+  </div>
+</section>
+
+<!-- AUTH -->
+<section id="auth" class="auth-section">
+  <h2>Login / Signup</h2>
+  <input type="email" id="email" placeholder="Email" />
+  <input type="password" id="password" placeholder="Password" />
+  <button onclick="signup()">Sign Up</button>
+  <button onclick="login()">Login</button>
+  <button onclick="logout()">Logout</button>
+  <p id="authMsg"></p>
+</section>
+
+<footer class="footer">© 2025 GoldenBite</footer>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-firestore.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAIvtqr6W1niUP2mM9L3dHUBCyVLn2quqs",
+    authDomain: "food-ordering-system-8a21a.firebaseapp.com",
+    projectId: "food-ordering-system-8a21a"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+
+  let currentUserId = null;
+  let cart = [];
+
+  // ADD ITEM
+  window.addItem = (name) => {
+    if (!currentUserId) {
+      alert("Please login first");
+      return;
+    }
+
+    const found = cart.find(i => i.name === name);
+    if (found) {
+      found.qty++;
+    } else {
+      cart.push({ name, qty: 1 });
+    }
+
+    renderCart();
+    document.getElementById("payment").style.display = "block";
+  };
+
+  // RENDER CART
+  function renderCart() {
+    const list = document.getElementById("cartList");
+    list.innerHTML = "";
+
+    cart.forEach((item, index) => {
+      const div = document.createElement("div");
+      div.className = "menu-item";
+      div.innerHTML = `
+        <h3>${item.name}</h3>
+        <button onclick="decreaseQty(${index})">−</button>
+        <strong> ${item.qty} </strong>
+        <button onclick="increaseQty(${index})">+</button>
+        <button onclick="removeItem(${index})">❌</button>
+      `;
+      list.appendChild(div);
+    });
+  }
+
+  window.increaseQty = (index) => {
+    cart[index].qty++;
+    renderCart();
+  };
+
+  window.decreaseQty = (index) => {
+    if (cart[index].qty > 1) cart[index].qty--;
+    renderCart();
+  };
+
+  window.removeItem = (index) => {
+    cart.splice(index, 1);
+    renderCart();
+    if (cart.length === 0) {
+      document.getElementById("payment").style.display = "none";
+    }
+  };
+
+  // PLACE ORDER
+  window.placeOrder = async () => {
+    if (cart.length === 0) return;
+
+    const payment = document.getElementById("paymentMethod").value;
+
+    await addDoc(collection(db, "orders"), {
+      userId: currentUserId,
+      items: cart,
+      paymentMethod: payment,
+      status: "Placed",
+      time: new Date()
+    });
+
+    cart = [];
+    renderCart();
+    document.getElementById("payment").style.display = "none";
+    orderMsg.innerText = "Order placed successfully!";
+    loadOrders();
+  };
+
+  // ✅ FIXED LOAD ORDERS (OLD + NEW DATA SAFE)
+  async function loadOrders() {
+    const history = document.getElementById("orderHistory");
+    history.innerHTML = "";
+
+    if (!currentUserId) {
+      history.innerHTML = "<p>Please login to see orders</p>";
+      return;
+    }
+
+    const q = query(collection(db, "orders"), where("userId", "==", currentUserId));
+    const snapshot = await getDocs(q);
+
+    if (snapshot.empty) {
+      history.innerHTML = "<p>No orders yet</p>";
+      return;
+    }
+
+    snapshot.forEach(doc => {
+      const d = doc.data();
+      const div = document.createElement("div");
+      div.className = "menu-item";
+
+      // handle old + new order formats
+      if (typeof d.items[0] === "string") {
+        div.innerHTML = d.items.map(i => `<p>${i} × 1</p>`).join("");
+      } else {
+        div.innerHTML = d.items.map(i => `<p>${i.name} × ${i.qty}</p>`).join("");
+      }
+
+      history.appendChild(div);
+    });
+  }
+
+  // AUTH
+  window.signup = () =>
+    createUserWithEmailAndPassword(auth, email.value, password.value)
+      .then(u => {
+        currentUserId = u.user.uid;
+        authMsg.innerText = "Signup successful";
+        loadOrders();
+      })
+      .catch(e => authMsg.innerText = e.message);
+
+  window.login = () =>
+    signInWithEmailAndPassword(auth, email.value, password.value)
+      .then(u => {
+        currentUserId = u.user.uid;
+        authMsg.innerText = "Login successful";
+        loadOrders();
+      })
+      .catch(e => authMsg.innerText = e.message);
+
+  window.logout = () =>
+    signOut(auth).then(() => {
+      currentUserId = null;
+      cart = [];
+      document.getElementById("payment").style.display = "none";
+      authMsg.innerText = "Logged out";
+      document.getElementById("orderHistory").innerHTML =
+        "<p>Please login to see orders</p>";
+    });
+
+  window.scrollToSection = id =>
+    window.scrollTo({ top: document.getElementById(id).offsetTop - 90, behavior: "smooth" });
+</script>
+
 </body>
 </html>
