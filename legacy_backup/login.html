@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login - GoldenBite</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body style="min-height:100vh; display:flex; flex-direction:column;">
+
+    <nav class="navbar">
+        <div class="logo">✨ GoldenBite</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Back to Menu</a></li>
+        </ul>
+    </nav>
+
+    <div class="auth-wrapper">
+        <div class="auth-box">
+            <h2 id="auth-title">Welcome Back</h2>
+
+            <!-- ALERT BOX -->
+            <div id="auth-alert" style="display:none; color: #ff6b6b; margin-bottom: 1rem; font-size: 0.9rem;"></div>
+
+            <!-- LOGIN FORM -->
+            <form id="login-form">
+                <input type="email" id="login-email" placeholder="Email" required>
+                <input type="password" id="login-pass" placeholder="Password" required>
+                <button type="submit">Login</button>
+                <p>New user? <a href="#" onclick="toggleAuth()">Sign up here</a></p>
+            </form>
+
+            <!-- SIGNUP FORM -->
+            <form id="signup-form" style="display:none;">
+                <input type="text" id="signup-name" placeholder="Full Name" required>
+                <input type="email" id="signup-email" placeholder="Email" required>
+                <input type="password" id="signup-pass" placeholder="Password" required>
+                <button type="submit">Create Account</button>
+                <p>Already have an account? <a href="#" onclick="toggleAuth()">Login here</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODULE SCRIPT -->
+    <script type="module">
+        import { loginUser, signupUser } from './auth.js';
+
+        const loginForm = document.getElementById('login-form');
+        const signupForm = document.getElementById('signup-form');
+        const alertBox = document.getElementById('auth-alert');
+
+        // Toggle
+        window.toggleAuth = () => {
+            if (loginForm.style.display === 'none') {
+                loginForm.style.display = 'block';
+                signupForm.style.display = 'none';
+                document.getElementById('auth-title').innerText = "Welcome Back";
+            } else {
+                loginForm.style.display = 'none';
+                signupForm.style.display = 'block';
+                document.getElementById('auth-title').innerText = "Join GoldenBite";
+            }
+            alertBox.style.display = 'none';
+        }
+
+        // Login Handler
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const pass = document.getElementById('login-pass').value;
+
+            const res = await loginUser(email, pass);
+            if (res.success) {
+                window.location.href = "index.html"; // Redirect
+            } else {
+                showAlert(res.message);
+            }
+        });
+
+        // Signup Handler
+        signupForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const pass = document.getElementById('signup-pass').value;
+
+            const res = await signupUser(email, pass, name);
+            if (res.success) {
+                window.location.href = "index.html";
+            } else {
+                showAlert(res.message);
+            }
+        });
+
+        function showAlert(msg) {
+            alertBox.innerText = msg;
+            alertBox.style.display = 'block';
+        }
+    </script>
+</body>
+
+</html>

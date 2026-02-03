@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout - GoldenBite</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo">✨ GoldenBite</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Menu</a></li>
+        </ul>
+    </nav>
+
+    <div class="container checkout-container">
+        <!-- LEFT: FORM -->
+        <div class="checkout-form">
+            <h2>Shipping Address</h2>
+            <form onsubmit="processOrder(event)">
+                <div class="form-group">
+                    <input type="text" placeholder="Full Name" required class="input-field">
+                </div>
+                <div class="form-group">
+                    <input type="text" placeholder="Address Line 1" required class="input-field">
+                </div>
+                <div class="form-group">
+                    <input type="text" placeholder="City & State" required class="input-field">
+                </div>
+
+                <h2 style="margin-top: 2rem;">Payment Method</h2>
+                <div class="payment-methods">
+                    <div id="pay-upi" class="payment-option" onclick="selectPayment('upi')">UPI (QR)</div>
+                    <div id="pay-card" class="payment-option" onclick="selectPayment('card')">Online (Card)</div>
+                    <div id="pay-cod" class="payment-option selected" onclick="selectPayment('cod')">Cash on Delivery
+                    </div>
+                </div>
+
+                <div id="payment-details">
+                    <p style="margin-top:1rem;color:#ecc94b;">Cash on Delivery selected.</p>
+                </div>
+
+                <button type="submit" class="cta-btn" style="margin-top: 2rem; width: 100%;">Proceed to Pay</button>
+            </form>
+        </div>
+
+        <!-- RIGHT: BILL -->
+        <div class="checkout-bill" id="checkout-bill">
+            <h2>Order Summary</h2>
+            <div id="checkout-items">
+                <!-- Items -->
+            </div>
+            <div class="divider"></div>
+            <div id="checkout-summary">
+                <!-- Totals -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoldenBite - Luxury Menu</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="logo">✨ GoldenBite</div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Menu</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li id="nav-auth"><a href="login.html">Login</a></li>
+            <li class="cart-icon" onclick="window.location.href='checkout.html'">
+                🛒 <span id="cartBadge" class="cart-badge">0</span>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <header class="hero small-hero">
+        <div class="hero-content">
+            <h1>Our Menu</h1>
+            <p>Select from our premium collection</p>
+        </div>
+    </header>
+
+    <!-- FILTERS -->
+    <div class="menu-filters">
+        <button onclick="filterMenu('all')">All</button>
+        <button onclick="filterMenu('pizza')">Pizzas</button>
+        <button onclick="filterMenu('burger')">Burgers</button>
+        <button onclick="filterMenu('pasta')">Pasta</button>
+    </div>
+
+    <!-- GRID -->
+    <section class="menu-grid">
+        <!-- JS Renders Items Here -->
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2026 GoldenBite Luxury Foods</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
